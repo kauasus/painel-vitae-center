@@ -23,12 +23,12 @@ export const SenhaAtual: React.FC<SenhaAtualProps> = ({ senha }) => {
     <View style={styles.container}>
       <LinearGradient colors={[COLORS.primary, COLORS.primaryDark]} style={styles.card}>
         
-        <Text style={styles.numero}>{senha.numero}</Text>
+        <Text style={styles.numero}>{senha.Tipo_Senha}{senha.Num_Sequencial}</Text>
         
         <View style={styles.infoContainer}>
           <View style={styles.infoBox}>
             <Text style={styles.infoLabel}>LOCAL</Text>
-            <Text style={styles.infoValue}>GUICHÊ {senha.guiche}</Text>
+            <Text style={styles.infoValue}>{senha.Dsc_Localizacao}</Text>
           </View>
           
           <View style={styles.infoBox}>

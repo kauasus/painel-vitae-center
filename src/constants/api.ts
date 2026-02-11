@@ -5,10 +5,9 @@ export const API_CONFIG: ApiConfig = {
   baseUrl: 'http://192.168.1.119:5050/api/painel-senha', 
   endpoints: {
     painelSenhas: '/painel-senhas',
-    chamarSenha: '/lista-senha-chamada',
+    chamarSenha: '/lista-senha-chamada?codSetor=8',
     resetarPainel: '/resetar-painel',
-  },
-  params: { codSetor: 8 }
+  }
 };
 
 // Flag para usar dados mockados ou API real
