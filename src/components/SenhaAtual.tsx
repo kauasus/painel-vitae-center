@@ -22,7 +22,7 @@ export const SenhaAtual: React.FC<SenhaAtualProps> = ({ senha }) => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={[COLORS.primary, COLORS.primaryDark]} style={styles.card}>
-        <Text style={styles.label}>SENHA ATUAL</Text>
+        
         <Text style={styles.numero}>{senha.numero}</Text>
         
         <View style={styles.infoContainer}>
@@ -30,10 +30,9 @@ export const SenhaAtual: React.FC<SenhaAtualProps> = ({ senha }) => {
             <Text style={styles.infoLabel}>LOCAL</Text>
             <Text style={styles.infoValue}>GUICHÊ {senha.guiche}</Text>
           </View>
-          <View style={styles.divisor} />
+          
           <View style={styles.infoBox}>
-            <Text style={styles.infoLabel}>SERVIÇO</Text>
-            <Text style={styles.infoValue}>{senha.tipo}</Text>
+          
           </View>
         </View>
       </LinearGradient>
@@ -67,15 +66,19 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: COLORS.white,
     marginVertical: -10,
+    
   },
   infoContainer: {
-    flexDirection: 'row',
+    
     backgroundColor: 'rgba(0,0,0,0.15)',
     borderRadius: 20,
     padding: 25,
-    marginTop: 20,
-    width: '80%',
-    justifyContent: 'space-around',
+    marginTop: 100,
+    width: '100%',
+    fontSize: 450
+
+    
+    
   },
   infoBox: {
     alignItems: 'center',
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   infoValue: {
-    fontSize: 32,
+    fontSize: 80,
     fontWeight: 'bold',
     color: COLORS.white,
   },

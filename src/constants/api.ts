@@ -2,12 +2,13 @@ import { ApiConfig } from '../types';
 
 // Configuração da API - Altere quando tiver o backend pronto
 export const API_CONFIG: ApiConfig = {
-  baseUrl: 'https://seu-sistema.com.br/api', // ALTERAR FUTURAMENTE
+  baseUrl: 'http://192.168.1.119:5050/api/painel-senha', 
   endpoints: {
     painelSenhas: '/painel-senhas',
-    chamarSenha: '/chamar-senha',
+    chamarSenha: '/lista-senha-chamada',
     resetarPainel: '/resetar-painel',
   },
+  params: { codSetor: 8 }
 };
 
 // Flag para usar dados mockados ou API real

@@ -18,4 +18,5 @@ export interface ApiConfig {
     chamarSenha: string;
     resetarPainel: string;
   };
+  params: {codSetor: number}
 }

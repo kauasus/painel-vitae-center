@@ -50,7 +50,7 @@ export const useSenhas = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.painelSenhas}`);
+      const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.chamarSenha}`);
       
       if (!response.ok) {
         throw new Error('Erro ao buscar senhas');

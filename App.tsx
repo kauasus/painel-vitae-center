@@ -3,7 +3,7 @@ import { View, StyleSheet, StatusBar, Animated } from "react-native";
 import { Header } from "./src/components/Header";
 import { SenhaAtual } from "./src/components/SenhaAtual";
 import { Historico } from "./src/components/Historico";
-
+import * as Speech from 'expo-speech';
 import { YouTubePlayer } from "./src/components/YouTubePlayer";
 import { useSenhas } from "./src/hooks/useSenhas";
 import { formatarHora } from "./src/utils/formatters";
@@ -13,12 +13,17 @@ const YOUTUBE_VIDEO_ID = "ORPyOp_WFpU";
 const TEMPO_EXIBICAO_SENHA = 14000; // 14 segundos (2 ciclos de 7s)
 const TEMPO_EXTRA_ESPERA = 3000; // 3 segundos extras antes de voltar ao vídeo
 
+
+
 export default function App() {
   const { senhaAtual, historico, novaSenhaChamada, resetNovaSenha } =
     useSenhas();
   const [relogio, setRelogio] = useState(new Date());
   const [mostrarPainel, setMostrarPainel] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
+  const speak = (frase: string) => {
+    Speech.speak(frase, { language: 'pt-BR' });
+  };
 
   // Atualizar relógio a cada segundo
   useEffect(() => {
@@ -31,6 +36,8 @@ export default function App() {
     if (novaSenhaChamada) {
       // Mostrar painel com fade in
       setMostrarPainel(true);
+      senhaAtual ? speak(`Senha ${senhaAtual.numero}, favor comparecer ao guichê ${senhaAtual.guiche}`) : null
+      
 
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -62,9 +69,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar hidden />
 
-      {/* Header fixo no topo */}
-      <Header relogio={formatarHora(relogio)} />
-
+      
       {/* Conteúdo principal */}
       <View style={styles.content}>
         {/* CAIXA DA SENHA + VÍDEO (mesma área) */}
