@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Senha } from '../types';
-import { COLORS } from '../constants/colors';
+import React from 'react'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { Senha } from '../types'
+import { COLORS } from '../constants/colors'
 
 interface HistoricoProps {
-  senhas: Senha[];
+  senhas: Senha[]
 }
 
 export const Historico: React.FC<HistoricoProps> = ({ senhas }) => {
@@ -13,15 +13,15 @@ export const Historico: React.FC<HistoricoProps> = ({ senhas }) => {
       <Text style={styles.label}>ÚLTIMAS CHAMADAS</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
         {senhas.map((senha) => (
-          <View key={senha.id} style={styles.card}>
-            <Text style={styles.numero}>{senha.numero}</Text>
-            <Text style={styles.guiche}>GUICHÊ {senha.guiche}</Text>
+          <View key={senha.Cod_Senha_Atendimento} style={styles.card}>
+            <Text style={styles.numero}>{senha.Num_Sequencial}</Text>
+            <Text style={styles.guiche}>GUICHÊ {senha.Dsc_Localizacao}</Text>
           </View>
         ))}
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
     fontWeight: '600',
   },
-});
+})
