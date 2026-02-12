@@ -7,7 +7,7 @@ export const useSenhas = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [novaSenhaChamada, setNovaSenhaChamada] = useState(false)
-  const historico: Senha[] = []
+
   // Função para buscar senhas da API
   const fetchSenhas = useCallback(async () => {
     try {
@@ -51,7 +51,6 @@ export const useSenhas = () => {
 
   return {
     senhaAtual,
-    historico,
     loading,
     error,
     novaSenhaChamada,

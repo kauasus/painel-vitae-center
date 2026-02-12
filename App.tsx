@@ -7,16 +7,17 @@ import { YouTubePlayer } from './src/components/YouTubePlayer'
 import { useSenhas } from './src/hooks/useSenhas'
 import { COLORS } from './src/constants/colors'
 import { Audio } from 'expo-av'
+import { Senha } from '@/types'
 
 const YOUTUBE_VIDEO_ID = 'ORPyOp_WFpU'
 const TEMPO_EXIBICAO_SENHA = 7000 // 14 segundos (2 ciclos de 7s)
 const TEMPO_EXTRA_ESPERA = 1000 // 3 segundos extras antes de voltar ao vídeo
 
 export default function App() {
-  const { senhaAtual, historico, novaSenhaChamada, resetNovaSenha } =
-    useSenhas()
+  const { senhaAtual, novaSenhaChamada, resetNovaSenha } = useSenhas()
   const [mostrarPainel, setMostrarPainel] = useState(false)
   const [fadeAnim] = useState(new Animated.Value(0))
+  const [historico, setHistorico] = useState<Senha[]>([])
 
   const playSound = async () => {
     const { sound } = await Audio.Sound.createAsync(
@@ -25,20 +26,31 @@ export default function App() {
     await sound.playAsync()
   }
 
-  const speak = (frase: string) => {
-    playSound()
-    Speech.speak(frase, { language: 'pt-BR' })
+  const speak = async (frase: string) => {
+    await playSound()
+    Speech.speak(frase, { language: 'pt-BR', voice: 'pt-br-x-afs-local' })
   }
+
+  useEffect(() => {
+    if (senhaAtual) {
+      setHistorico((prev) => {
+        const jaExiste = prev.some(
+          (s) => s.Cod_Senha_Atendimento === senhaAtual.Cod_Senha_Atendimento,
+        )
+        if (jaExiste) return prev
+        return [senhaAtual, ...prev].slice(0, 10)
+      })
+    }
+  }, [senhaAtual])
 
   // Detectar nova senha e alternar para o painel
   useEffect(() => {
     if (novaSenhaChamada) {
-      historico.push(senhaAtual!)
       // Mostrar painel com fade in
       setMostrarPainel(true)
       senhaAtual
         ? speak(
-            `Senha ${senhaAtual.Num_Sequencial}, favor comparecer ao ${senhaAtual.Dsc_Localizacao}`,
+            `Senha ${senhaAtual.Num_Sequencial})}, favor comparecer ao ${senhaAtual.Dsc_Localizacao}`,
           )
         : null
 
@@ -63,7 +75,6 @@ export default function App() {
           })
         }, TEMPO_EXTRA_ESPERA)
       }, TEMPO_EXIBICAO_SENHA)
-      console.log(historico)
       return () => clearTimeout(timeout)
     }
   }, [novaSenhaChamada, fadeAnim, resetNovaSenha])
