@@ -1,15 +1,23 @@
 import React, { useEffect } from 'react'
 import { View, StyleSheet, Platform } from 'react-native'
-import { WebView } from 'react-native-webview'
+import { useVideoPlayer, VideoView } from 'expo-video'
+
 interface YouTubePlayerProps {
   videoId: string
   isVisible: boolean
 }
 
+import videoSource from '../../assets/video-painel.mp4'
+
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   videoId,
   isVisible,
 }) => {
+  const player = useVideoPlayer(videoSource, (player) => {
+    player.loop = true
+    player.play()
+  })
+
   useEffect(() => {
     // O vídeo continua rodando mesmo quando isVisible = false
     // Apenas mudamos a opacidade, não destruímos o iframe
@@ -35,14 +43,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   // Se for ANDROID (APK), usamos a WebView
   return (
     <View style={[styles.container, !isVisible && styles.hidden]}>
-      <WebView
-        style={styles.video}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        allowsInlineMediaPlayback={true}
-        mediaPlaybackRequiresUserAction={false} // Permite autoplay
-        source={{ uri: videoUrl }}
-      />
+      <VideoView style={styles.video} player={player} />
     </View>
   )
 }

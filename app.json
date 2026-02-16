@@ -4,15 +4,10 @@
     "slug": "painel-vitae-center",
     "version": "1.0.0",
     "orientation": "landscape",
-    "platforms": [
-      "android",
-      "web"
-    ],
+    "platforms": ["android", "web"],
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",    
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.vitaecenter.painelsenhas"
@@ -24,10 +19,7 @@
       },
       "package": "com.vitaecenter.painelsenhas",
       "versionCode": 1,
-      "permissions": [
-        "INTERNET",
-        "ACCESS_NETWORK_STATE"
-      ],
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
       "usesCleartextTraffic": true
     },
     "web": {
@@ -38,6 +30,7 @@
         "projectId": "210bf97f-45ea-4f94-9eeb-c7014589f92f"
       }
     },
-    "owner": "giovaneluiz"
+    "owner": "giovaneluiz",
+    "plugins": ["expo-video"]
   }
 }

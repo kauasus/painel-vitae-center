@@ -36,14 +36,11 @@ export const SenhaAtual: React.FC<SenhaAtualProps> = ({ senha }) => {
             {senha.Num_Sequencial.toString().padStart(4, '0')}
           </Text>
         )}
-
         <View style={styles.infoContainer}>
           <View style={styles.infoBox}>
             <Text style={styles.infoLabel}>LOCAL</Text>
             <Text style={styles.infoValue}>{senha.Dsc_Localizacao}</Text>
           </View>
-
-          <View style={styles.infoBox}></View>
         </View>
       </LinearGradient>
     </View>
@@ -57,8 +54,8 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderRadius: 25,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'space-between',
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
@@ -66,23 +63,25 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
   },
   label: {
-    fontSize: 30,
+    fontSize: 18,
     color: 'rgba(255,255,255,0.8)',
     fontWeight: 'bold',
     letterSpacing: 4,
   },
   numero: {
-    fontSize: 180,
+    fontSize: 80,
     fontWeight: '900',
     color: COLORS.white,
-    marginVertical: -10,
+    marginTop: 25,
+    marginBottom: -105,
   },
   paciente: {
-    fontSize: 120,
+    fontSize: 50,
     textAlign: 'center',
     fontWeight: '900',
     color: COLORS.white,
-    marginVertical: -10,
+    marginTop: 25,
+    marginBottom: -105,
   },
   infoContainer: {
     backgroundColor: 'rgba(0,0,0,0.15)',
@@ -90,18 +89,17 @@ const styles = StyleSheet.create({
     padding: 25,
     marginTop: 100,
     width: '100%',
-    fontSize: 450,
   },
   infoBox: {
     alignItems: 'center',
   },
   infoLabel: {
-    fontSize: 58,
+    fontSize: 20,
     color: 'rgba(255,255,255,0.7)',
     marginBottom: 5,
   },
   infoValue: {
-    fontSize: 80,
+    fontSize: 48,
     fontWeight: 'bold',
     color: COLORS.white,
   },

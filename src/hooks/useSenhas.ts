@@ -44,7 +44,7 @@ export const useSenhas = () => {
     fetchSenhas()
 
     // Atualizar a cada 7 segundos
-    const interval = setInterval(fetchSenhas, 7000)
+    const interval = setInterval(fetchSenhas, 3000)
 
     return () => clearInterval(interval)
   }, [fetchSenhas])
