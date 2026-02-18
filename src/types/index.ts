@@ -15,8 +15,6 @@ export interface FilaSenhas {
 export interface ApiConfig {
   baseUrl: string
   endpoints: {
-    painelSenhas: string
     chamarSenha: string
-    resetarPainel: string
   }
 }

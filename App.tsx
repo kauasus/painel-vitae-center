@@ -6,8 +6,10 @@ import * as Speech from 'expo-speech'
 import { YouTubePlayer } from './src/components/YouTubePlayer'
 import { useSenhas } from './src/hooks/useSenhas'
 import { COLORS } from './src/constants/colors'
-import { Audio } from 'expo-av'
+import { useAudioPlayer } from 'expo-audio'
 import { Senha } from '@/types'
+
+import audioSource from './assets/sound.mp3'
 
 const YOUTUBE_VIDEO_ID = 'ORPyOp_WFpU'
 const TEMPO_EXIBICAO_SENHA = 7000 // 14 segundos (2 ciclos de 7s)
@@ -19,15 +21,13 @@ export default function App() {
   const [fadeAnim] = useState(new Animated.Value(0))
   const [historico, setHistorico] = useState<Senha[]>([])
 
-  const playSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require('./assets/sound.mp3'),
-    )
-    await sound.playAsync()
+  const playSound = () => {
+    const sound = useAudioPlayer(audioSource)
+    sound.play()
   }
 
-  const speak = async (frase: string) => {
-    await playSound()
+  const speak = (frase: string) => {
+    playSound()
     Speech.speak(frase, { language: 'pt-BR', voice: 'pt-br-x-afs-local' })
   }
 
@@ -50,9 +50,7 @@ export default function App() {
       setMostrarPainel(true)
       if (senhaAtual) {
         senhaAtual.nom_paciente
-          ? speak(
-              `${senhaAtual.nom_paciente})}, ${senhaAtual.Dsc_Localizacao}`,
-            )
+          ? speak(`${senhaAtual.nom_paciente})}, ${senhaAtual.Dsc_Localizacao}`)
           : speak(
               `Senha ${senhaAtual.Num_Sequencial})}, favor comparecer ao ${senhaAtual.Dsc_Localizacao}`,
             )
