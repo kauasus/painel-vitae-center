@@ -10,26 +10,33 @@ import { useAudioPlayer } from 'expo-audio'
 import { Senha } from '@/types'
 
 import audioSource from './assets/sound.mp3'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ConfigPainelModal } from '@/components/ConfigPainelModal'
 
 const YOUTUBE_VIDEO_ID = 'ORPyOp_WFpU'
 const TEMPO_EXIBICAO_SENHA = 7000 // 14 segundos (2 ciclos de 7s)
 const TEMPO_EXTRA_ESPERA = 1000 // 3 segundos extras antes de voltar ao vídeo
 
 export default function App() {
-  const { senhaAtual, novaSenhaChamada, resetNovaSenha } = useSenhas()
+  const [andar, setAndar] = useState<string | null>(null)
+  const [modalVisivel, setModalVisivel] = useState(false)
   const [mostrarPainel, setMostrarPainel] = useState(false)
   const [fadeAnim] = useState(new Animated.Value(0))
   const [historico, setHistorico] = useState<Senha[]>([])
+  const { senhaAtual, novaSenhaChamada, resetNovaSenha } = useSenhas(andar)
+  const sound = useAudioPlayer(audioSource)
 
-  const playSound = () => {
-    const sound = useAudioPlayer(audioSource)
-    sound.play()
-  }
-
-  const speak = (frase: string) => {
-    playSound()
-    Speech.speak(frase, { language: 'pt-BR', voice: 'pt-br-x-afs-local' })
-  }
+  useEffect(() => {
+    const carregarConfig = async () => {
+      const salvo = await AsyncStorage.getItem('@painel_andar')
+      if (salvo) {
+        setAndar(salvo)
+      } else {
+        setModalVisivel(true)
+      }
+    }
+    carregarConfig()
+  }, [])
 
   useEffect(() => {
     if (senhaAtual) {
@@ -42,6 +49,20 @@ export default function App() {
       })
     }
   }, [senhaAtual])
+  
+  const playSound = () => {    
+    sound.play()
+  }
+
+  const speak = (frase: string) => {
+    playSound()
+    Speech.speak(frase, { language: 'pt-BR', voice: 'pt-br-x-afs-local' })
+  }
+
+  const salvarAndar = (novoAndar: string) => {
+    setAndar(novoAndar)
+    setModalVisivel(false)
+  }
 
   // Detectar nova senha e alternar para o painel
   useEffect(() => {
@@ -83,6 +104,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <ConfigPainelModal visible={modalVisivel} onSave={salvarAndar} />
       <StatusBar hidden />
 
       {/* Conteúdo principal */}

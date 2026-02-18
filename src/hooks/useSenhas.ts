@@ -1,26 +1,27 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Senha } from '../types'
 import { API_CONFIG } from '../constants/api'
 
-export const useSenhas = () => {
+export const useSenhas = (andar: string | null) => {
   const [senhaAtual, setSenhaAtual] = useState<Senha | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [novaSenhaChamada, setNovaSenhaChamada] = useState(false)
+  const lastTimestampRef = useRef<string | null>(null)
 
-  // Função para buscar senhas da API
   const fetchSenhas = useCallback(async () => {
+    if (!andar) {
+      setLoading(false)
+      return null
+    }
+    setLoading(true)
     try {
-      setLoading(true)
       const response = await fetch(
-        `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.chamarSenha}`,
+        `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.chamarSenha}?codSetor=${encodeURIComponent(andar)}`,
       )
-
       if (response.status === 200) {
         const data: Senha = await response.json()
-
-        // Detectar se há uma nova senha (comparar timestamp ou ID)
-        if (data.Cod_Senha_Atendimento && data.timestamp) {
+        if (data.Cod_Senha_Atendimento) {
           setSenhaAtual(data)
           setNovaSenhaChamada(true)
         }
@@ -33,21 +34,19 @@ export const useSenhas = () => {
     } finally {
       setLoading(false)
     }
-  }, [senhaAtual?.timestamp])
+  }, [andar])
 
   const resetNovaSenha = useCallback(() => {
     setNovaSenhaChamada(false)
   }, [])
 
   useEffect(() => {
-    // Buscar senhas inicialmente
+    if (!andar) return
+
     fetchSenhas()
-
-    // Atualizar a cada 7 segundos
     const interval = setInterval(fetchSenhas, 3000)
-
     return () => clearInterval(interval)
-  }, [fetchSenhas])
+  }, [fetchSenhas, andar])
 
   return {
     senhaAtual,

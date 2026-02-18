@@ -23,24 +23,6 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     // Apenas mudamos a opacidade, não destruímos o iframe
   }, [isVisible])
 
-  const videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&showinfo=0`
-
-  if (Platform.OS === 'web') {
-    return (
-      <View style={[styles.container, !isVisible && styles.hidden]}>
-        <iframe
-          width="100%"
-          height="100%"
-          src={videoUrl}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          style={{ border: 'none' }}
-        />
-      </View>
-    )
-  }
-
-  // Se for ANDROID (APK), usamos a WebView
   return (
     <View style={[styles.container, !isVisible && styles.hidden]}>
       <VideoView style={styles.video} player={player} />
