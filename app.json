@@ -29,13 +29,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    }
+    
     },
-    "extra": {
-      "eas": {
-        "projectId": "210bf97f-45ea-4f94-9eeb-c7014589f92f"
-      }
-    },
-    "owner": "giovaneluiz",
+    
     "plugins": [
       "expo-video",
       "expo-audio",
@@ -49,4 +46,4 @@
       ]
     ]
   }
-}
+
