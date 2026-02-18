@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Senha } from '../types';
-import { COLORS } from '../constants/colors';
+import React from 'react'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { Senha } from '../types'
+import { COLORS } from '../constants/colors'
 
 interface HistoricoProps {
-  senhas: Senha[];
+  senhas: Senha[]
 }
 
 export const Historico: React.FC<HistoricoProps> = ({ senhas }) => {
@@ -13,15 +13,20 @@ export const Historico: React.FC<HistoricoProps> = ({ senhas }) => {
       <Text style={styles.label}>ÚLTIMAS CHAMADAS</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
         {senhas.map((senha) => (
-          <View key={senha.id} style={styles.card}>
-            <Text style={styles.numero}>{senha.numero}</Text>
-            <Text style={styles.guiche}>GUICHÊ {senha.guiche}</Text>
+          <View key={senha.Cod_Senha_Atendimento} style={styles.card}>
+            <Text style={styles.numero}>
+              {senha.Tipo_Senha}
+              {senha.nom_paciente
+                ? senha.nom_paciente.slice(0, 20)
+                : senha.Num_Sequencial.toString().padStart(4, '0')}
+            </Text>
+            <Text style={styles.numero}>{senha.Dsc_Localizacao}</Text>
           </View>
         ))}
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.white,
     borderRadius: 15,
-    padding: 20,
+    padding: 10,
     marginBottom: 15,
     alignItems: 'center',
     borderLeftWidth: 8,
@@ -46,13 +51,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   numero: {
-    fontSize: 40,
+    fontSize: 16,
     fontWeight: 'bold',
     color: COLORS.black,
+    textAlign: 'center',
   },
-  guiche: {
-    fontSize: 18,
-    color: COLORS.secondary,
-    fontWeight: '600',
-  },
-});
+})

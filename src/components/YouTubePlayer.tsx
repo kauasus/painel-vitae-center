@@ -1,36 +1,34 @@
-import React, { useRef, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Platform } from 'react-native'
+import { useVideoPlayer, VideoView } from 'expo-video'
 
 interface YouTubePlayerProps {
-  videoId: string;
-  isVisible: boolean;
+  videoId: string
+  isVisible: boolean
 }
 
-export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, isVisible }) => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+import videoSource from '../../assets/video-painel.mp4'
+
+export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
+  videoId,
+  isVisible,
+}) => {
+  const player = useVideoPlayer(videoSource, (player) => {
+    player.loop = true
+    player.play()
+  })
 
   useEffect(() => {
     // O vídeo continua rodando mesmo quando isVisible = false
     // Apenas mudamos a opacidade, não destruímos o iframe
-  }, [isVisible]);
-
-  const videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&showinfo=0`;
+  }, [isVisible])
 
   return (
     <View style={[styles.container, !isVisible && styles.hidden]}>
-      <iframe
-        ref={iframeRef}
-        width="100%"
-        height="100%"
-        src={videoUrl}
-        frameBorder="0"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-        style={{ border: 'none', display: 'block' }}
-      />
+      <VideoView style={styles.video} player={player} />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -45,4 +43,8 @@ const styles = StyleSheet.create({
     opacity: 0,
     pointerEvents: 'none',
   },
-});
+  video: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+})

@@ -1,15 +1,9 @@
-import { ApiConfig } from '../types';
+import { ApiConfig } from '../types'
 
-// Configuração da API - Altere quando tiver o backend pronto
 export const API_CONFIG: ApiConfig = {
-  baseUrl: 'http://192.168.1.119:5050/api/painel-senha', 
+  baseUrl:
+    'https://webclin-vitae-api-ecb2dra0c3cffvfp.brazilsouth-01.azurewebsites.net/api/painel-senha',
   endpoints: {
-    painelSenhas: '/painel-senhas',
     chamarSenha: '/lista-senha-chamada',
-    resetarPainel: '/resetar-painel',
   },
-  params: { codSetor: 8 }
-};
-
-// Flag para usar dados mockados ou API real
-export const USE_MOCK_DATA = true; // Altere para false quando a API estiver pronta
+}
