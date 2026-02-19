@@ -15,6 +15,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 }) => {
   const player = useVideoPlayer(videoSource, (player) => {
     player.loop = true
+    player.muted = true
     player.play()
   })
 
